@@ -1,23 +1,23 @@
-PImage nova;
-Splitter source;
+PImage source;
+Splitter splited;
 Particles [] tiles;
 boolean dissolve;
 
 void setup() {
   size (1024, 768, P3D);
-  nova=loadImage("nova.jpg"); //load your image here
+  source=loadImage("nova.jpg"); //load your image here
  
   //Split original image into tiles
-  source=new Splitter(nova, 40, 40); //image to split, 40x40 tiles (change as how many x,y images you want) 
+  splited=new Splitter(source, 40, 40); //image to split, 40x40 tiles (change as how many x,y images you want) 
 
 
 //Create particles of splitted images
-  tiles=new Particles[source.smallImages.length]; 
+  tiles=new Particles[splited.smallImages.length]; 
 
   for (int i=0; i<tiles.length-1; i++) {
-    println(i, tiles.length, source.smallImages.length);
+    println(i, tiles.length, splited.smallImages.length);
 
-    tiles[i]=new Particles(source.smallImages[i], new PVector(source.tilepositions[i].x, source.tilepositions[i].y));
+    tiles[i]=new Particles(splited.smallImages[i], new PVector(splited.tilepositions[i].x, splited.tilepositions[i].y));
   }
 }
 
@@ -32,7 +32,7 @@ void draw() {
       tiles[i].display();
     }
   } else {
-    image(nova, 0, 0);
+    image(source, 0, 0);
   }
 }
 
@@ -122,8 +122,8 @@ void mouseClicked() {
   if (mouseButton==RIGHT) {
     dissolve=false;
     for (int i=0; i<tiles.length-1; i++) {
-      tiles[i].location.x=source.tilepositions[i].x;
-      tiles[i].location.y=source.tilepositions[i].y;
+      tiles[i].location.x=splited.tilepositions[i].x;
+      tiles[i].location.y=splited.tilepositions[i].y;
      
     }
 }
